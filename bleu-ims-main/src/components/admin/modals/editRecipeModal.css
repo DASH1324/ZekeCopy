@@ -1,0 +1,137 @@
+.editRecipe-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.editRecipe-modal-container {
+    background-color: #fff;
+    padding: 25px;
+    border-radius: 10px;
+    width: 600px;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+}
+
+.editRecipe-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.editRecipe-modal-header h3 {
+    margin: 0;
+    color: #4B929D;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.editRecipe-close-button {
+    font-size: 24px;
+    cursor: pointer;
+    color: #444;
+}
+
+.editRecipe-modal-form label {
+    display: block;
+    margin-bottom: 15px;
+    font-weight: 500;
+    color: #333;
+}
+
+.editRecipe-modal-form input,
+.editRecipe-modal-form textarea,
+.editRecipe-modal-form select {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 8px 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+.editRecipe-modal-form textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.ingredients-section {
+    margin-bottom: 20px;
+}
+
+.ingredients-section h4 {
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.ingredient-row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.ingredient-row input {
+    flex: 1;
+}
+
+.remove-ingredient-button {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 12px;
+    cursor: pointer;
+}
+
+.add-ingredient-button {
+    background-color: #4B929D;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 12px;
+    margin-top: 10px;
+    cursor: pointer;
+    width: 100%;
+}
+
+.editRecipe-button-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+}
+
+.editRecipe-submit-button {
+    background-color: #4B929D;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 20px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.required {
+    color: #dc3545;
+}
+
+.error {
+    border-color: #dc3545;
+}
+
+.error-message {
+    color: #dc3545;
+    font-size: 12px;
+    margin-top: 5px;
+    margin-bottom: 0;
+}

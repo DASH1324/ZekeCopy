@@ -1,0 +1,53 @@
+/* LogINAs.css */
+
+/* Container for centering the content */
+.button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f4f4f9; /* Light coffee background */
+  flex-direction: column;
+}
+
+/* Logo section */
+.logo {
+  max-width: 150px;
+  margin-bottom: 20px;
+}
+
+/* Styling for buttons */
+.role-btn {
+  padding: 15px 30px;
+  margin: 15px;
+  background-color: #336699; /* Blue color */
+  color: white;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: bold;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+/* Hover effect for buttons */
+.role-btn:hover {
+  background-color: #264d73; /* Darker blue */
+  transform: scale(1.05); /* Slightly enlarge the button on hover */
+}
+
+/* Button focus styling */
+.role-btn:focus {
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(51, 102, 153, 0.3);
+}
+
+/* Adding text under buttons for better description */
+.role-btn-text {
+  font-size: 16px;
+  color: #555;
+  margin-top: 10px;
+  font-weight: normal;
+  text-align: center;
+}
