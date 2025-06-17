@@ -181,7 +181,6 @@ async def get_full_product_details(product_id: int, token: str = Depends(oauth2_
     conn = await get_db_connection()
     try:
         async with conn.cursor() as cursor:
-            # Main query to get product details and calculated status for a single product
             await cursor.execute("""
                 SELECT
                     p.ProductName,

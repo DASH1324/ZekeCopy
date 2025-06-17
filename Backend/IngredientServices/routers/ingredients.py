@@ -85,7 +85,6 @@ async def validate_token_and_roles(token: str, allowed_roles: List[str]):
 
 @router.get("/", response_model=List[IngredientOut])
 async def get_all_ingredients(token: str = Depends(oauth2_scheme)):
-    # --- FIX APPLIED HERE: Added 'cashier' to the list of allowed roles ---
     await validate_token_and_roles(token, ["admin", "manager", "staff", "cashier"])
     
     conn = None
