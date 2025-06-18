@@ -34,13 +34,14 @@ app.add_middleware(
         "http://192.168.100.10:5000",
         "http://127.0.0.1:4000",
         "http://localhost:4000",
-        # --- FIX #2: Uncommented the origin to allow both localhost and 127.0.0.1 ---
         "http://127.0.0.1:4001", 
         "http://localhost:4001",
-        "http://localhost:9001",
-        "http://127.0.0.1:9001",
+        "http://localhost:9002",
+        "http://127.0.0.1:9002",
         "http://localhost:8001",
         "http://127.0.0.1:8001",
+        "http://localhost:9005",
+        "http://127.0.0.1:9005",
         "http://localhost:3000"
     ],
     allow_credentials=True,
