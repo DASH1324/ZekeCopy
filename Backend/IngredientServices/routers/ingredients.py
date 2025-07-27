@@ -93,7 +93,7 @@ async def get_all_ingredients(token: str = Depends(oauth2_scheme)):
     try:
         conn = await get_db_connection()
         async with conn.cursor() as cursor:
-            await cursor.execute("SELECT IngredientID, IngredientName, Amount, Unit as Measurement, BestBeforeDate, ExpirationDate, Status FROM Ingredients")
+            await cursor.execute("SELECT IngredientID, IngredientName, Amount, Measurement, BestBeforeDate, ExpirationDate, Status FROM Ingredients")
             rows = await cursor.fetchall()
             return [IngredientOut(**row_to_dict(row)) for row in rows]
     finally:
@@ -113,8 +113,8 @@ async def add_ingredient(ingredient: IngredientCreate, token: str = Depends(oaut
             status_val = get_status(ingredient.Amount, ingredient.Measurement)
             
             await cursor.execute("""
-                INSERT INTO Ingredients (IngredientName, Amount, Unit, BestBeforeDate, ExpirationDate, Status)
-                OUTPUT INSERTED.IngredientID, INSERTED.IngredientName, INSERTED.Amount, INSERTED.Unit as Measurement, 
+                INSERT INTO Ingredients (IngredientName, Amount, Measurement, BestBeforeDate, ExpirationDate, Status)
+                OUTPUT INSERTED.IngredientID, INSERTED.IngredientName, INSERTED.Amount, INSERTED.Measurement, 
                        INSERTED.BestBeforeDate, INSERTED.ExpirationDate, INSERTED.Status
                 VALUES (?, ?, ?, ?, ?, ?)
             """, ingredient.IngredientName, ingredient.Amount, ingredient.Measurement,
@@ -142,14 +142,14 @@ async def update_ingredient(ingredient_id: int, ingredient: IngredientUpdate, to
             status_val = get_status(ingredient.Amount, ingredient.Measurement)
             
             await cursor.execute("""
-                UPDATE Ingredients SET IngredientName = ?, Amount = ?, Unit = ?,
+                UPDATE Ingredients SET IngredientName = ?, Amount = ?, Measurement = ?,
                 BestBeforeDate = ?, ExpirationDate = ?, Status = ?
                 WHERE IngredientID = ?
             """, ingredient.IngredientName, ingredient.Amount, ingredient.Measurement,
                 ingredient.BestBeforeDate, ingredient.ExpirationDate, status_val, ingredient_id)
             
             await cursor.execute("""
-                SELECT IngredientID, IngredientName, Amount, Unit as Measurement, 
+                SELECT IngredientID, IngredientName, Amount, Measurement, 
                        BestBeforeDate, ExpirationDate, Status 
                 FROM Ingredients WHERE IngredientID = ?
             """, ingredient_id)
@@ -217,7 +217,7 @@ async def deduct_ingredients_from_sale(
                 
                 # 2. Get all ingredients required for this recipe.
                 await cursor.execute("""
-                    SELECT IngredientID, Amount, Unit 
+                    SELECT IngredientID, Amount, Measurement
                     FROM RecipeIngredients 
                     WHERE RecipeID = ?
                 """, recipe_id)
@@ -234,18 +234,18 @@ async def deduct_ingredients_from_sale(
                         WHERE IngredientID = ?
                     """, total_to_deduct, recipe_ingredient.IngredientID)
                     
-                    logger.info(f"Deducted {total_to_deduct} {recipe_ingredient.Unit} of IngredientID {recipe_ingredient.IngredientID} for sale of {item.quantity}x {item.name}")
+                    logger.info(f"Deducted {total_to_deduct} {recipe_ingredient.Measurement} of IngredientID {recipe_ingredient.IngredientID} for sale of {item.quantity}x {item.name}")
             
             # 4. After all deductions, update the status of all ingredients at once.
             await cursor.execute("""
                 UPDATE Ingredients
                 SET Status = CASE
                     WHEN Amount <= 0 THEN 'Not Available'
-                    WHEN (Unit = 'g' AND Amount <= 50) OR
-                         (Unit = 'kg' AND Amount <= 0.5) OR
-                         (Unit = 'ml' AND Amount <= 100) OR
-                         (Unit = 'l' AND Amount <= 0.5) OR
-                         (Unit NOT IN ('g', 'kg', 'ml', 'l') AND Amount <= 1)
+                    WHEN (Measurement = 'g' AND Amount <= 50) OR
+                         (Measurement = 'kg' AND Amount <= 0.5) OR
+                         (Measurement = 'ml' AND Amount <= 100) OR
+                         (Measurement = 'l' AND Amount <= 0.5) OR
+                         (Measurement NOT IN ('g', 'kg', 'ml', 'l') AND Amount <= 1)
                     THEN 'Low Stock'
                     ELSE 'Available'
                 END

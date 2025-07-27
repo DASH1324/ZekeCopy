@@ -277,3 +277,4 @@ async def reset_password(email: EmailStr, token: str, new_password: str):
     await cursor.close()
     await conn.close()
     return {"message": "Password has been reset successfully."}
+    

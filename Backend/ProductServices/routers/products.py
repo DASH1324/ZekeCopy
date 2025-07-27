@@ -102,7 +102,7 @@ async def get_all_full_product_details(token: str = Depends(oauth2_scheme)):
     Retrieves all products with a simplified 'Available' or 'Unavailable' status
     based on a direct database query of ingredient stock levels.
     """
-    await validate_token_and_roles(token, ["admin", "manager", "staff", "cashier"])
+    # await validate_token_and_roles(token, ["admin", "manager", "staff", "cashier", "users"])
 
     conn = await get_db_connection()
     try:
@@ -176,7 +176,7 @@ async def get_full_product_details(product_id: int, token: str = Depends(oauth2_
     Retrieves a single product with a simplified 'Available' or 'Unavailable' status
     based on a direct database query.
     """
-    await validate_token_and_roles(token, ["admin", "manager", "staff", "cashier"])
+    # await validate_token_and_roles(token, ["admin", "manager", "staff", "cashier","users"])
 
     conn = await get_db_connection()
     try:
@@ -237,7 +237,7 @@ async def get_all_products(token: str = Depends(oauth2_scheme)):
     Retrieves basic product information without live stock status.
     This endpoint is used for building the main menu structure.
     """
-    await validate_token_and_roles(token, ["admin", "manager", "staff", "cashier"])
+    # await validate_token_and_roles(token, ["admin", "manager", "staff", "cashier", "users"])
     conn = await get_db_connection()
     try:
         async with conn.cursor() as cursor:
@@ -403,7 +403,7 @@ async def delete_product(product_id: int, token: str = Depends(oauth2_scheme)):
 
 @router.get("/products/{product_id}/sizes", response_model=List[ProductSizeOut])
 async def get_sizes_for_specific_product_is(product_id: int, token: str = Depends(oauth2_scheme)):
-    await validate_token_and_roles(token, ["admin", "manager", "staff"])
+    # await validate_token_and_roles(token, ["admin", "manager", "staff"])
     conn = await get_db_connection()
     try:
         async with conn.cursor() as cursor:

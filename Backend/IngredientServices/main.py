@@ -19,6 +19,8 @@ app.add_middleware(
         "http://192.168.100.10:5000",  # ims frontend (local network)
         "http://127.0.0.1:9000",  # Sale
         "http://localhost:9000"
+        "http://localhost:3000",  # ims frontend
+        "http://192.168.100.10:3000",
     ],
     allow_credentials=True,
     allow_methods=["*"],

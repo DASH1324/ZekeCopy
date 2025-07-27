@@ -127,17 +127,69 @@ const LoginPage = () => {
         console.log('User System:', userSystem);
         
         setTimeout(() => {
-          // Rule 1: Admin redirect to a different application/origin
-          if (userRole === 'admin' && userSystem === 'IMS') {
-            
-            const targetUrl = new URL('http://localhost:3000/admin/dashboard');
+          // IMS
+          // manager navigation
+          if (userRole === 'manager' && userSystem === 'IMS') {
+            const targetUrl = new URL('http://localhost:3000/admin/dashboard/');
+            targetUrl.searchParams.append('username', trimmedUsername);
+            targetUrl.searchParams.append('authorization', access_token);
+            window.location.href = targetUrl.toString();
+          }
+          // staff navigation
+          else if (userRole === 'staff' && userSystem === 'IMS') {
+            const targetUrl = new URL('http://localhost:3000/staff/dashboard/');
             targetUrl.searchParams.append('username', trimmedUsername);
             targetUrl.searchParams.append('authorization', access_token);
             window.location.href = targetUrl.toString();
           } 
-          // Rule 2: Superadmin rule (Internal navigation).
-          else if (userRole === 'superadmin') {
-            
+          else if (userRole === 'admin' && userSystem === 'IMS') {
+            const targetUrl = new URL('http://localhost:3000/admin/dashboard/');
+            targetUrl.searchParams.append('username', trimmedUsername);
+            targetUrl.searchParams.append('authorization', access_token);
+            window.location.href = targetUrl.toString();
+          } 
+          // POS
+          // admin navigation
+          else if (userRole === 'admin' && userSystem === 'POS') {
+            const targetUrl = new URL('http://localhost:4001/admin/dashboard/');
+            targetUrl.searchParams.append('username', trimmedUsername);
+            targetUrl.searchParams.append('authorization', access_token);
+            window.location.href = targetUrl.toString();
+          }
+          // cashier navigation
+          else if (userRole === 'cashier') {
+            const targetUrl = new URL('http://localhost:4001/cashier/menu');
+            targetUrl.searchParams.append('username', trimmedUsername);
+            targetUrl.searchParams.append('authorization', access_token);
+            window.location.href = targetUrl.toString();
+          }
+
+          //OOS 
+          // admin navigation
+          else if (userRole === 'admin' && userSystem === 'OOS') {
+            const targetUrl = new URL('http://localhost:5000/admin/dashboard/');
+            targetUrl.searchParams.append('username', trimmedUsername);
+            targetUrl.searchParams.append('authorization', access_token);
+            window.location.href = targetUrl.toString();
+          }
+          //rider navigation
+          else if (userRole === 'rider' && userSystem === 'OOS') {
+            const targetUrl = new URL('http://localhost:5000/rider/home');
+            targetUrl.searchParams.append('username', trimmedUsername);
+            targetUrl.searchParams.append('authorization', access_token);
+            window.location.href = targetUrl.toString();
+          } 
+          //rider navigation
+          else if (userRole === 'user' && userSystem === 'OOS') {
+            const targetUrl = new URL('http://localhost:5000/');
+            targetUrl.searchParams.append('username', trimmedUsername);
+            targetUrl.searchParams.append('authorization', access_token);
+            window.location.href = targetUrl.toString();
+          } 
+
+          // UMS
+          // super admin ums navigation
+          else if (userRole === 'superadmin') {          
             navigate('/usermanagement', { 
               replace: true,
               state: { 
@@ -146,15 +198,9 @@ const LoginPage = () => {
               }
             });
           } 
+          // OOS outside user navigation
           else {
-            // MODIFICATION: Default navigation for other users, also passing state.
-            navigate('/', { 
-              replace: true, 
-              state: { 
-                username: trimmedUsername, 
-                authorization: access_token 
-              }
-            });
+            window.location.href = 'http://localhost:5000/';
           }
         }, 1000); 
       } else if (response.status === 401) {
@@ -306,3 +352,6 @@ const LoginPage = () => {
 };
 
 export default LoginPage;
+
+
+

@@ -1,10 +1,10 @@
 import aioodbc
 
 # database config
-server = 'ZEKE\\SQLEXPRESS'
+server = 'LAPTOP-8KPHOHE5\\SQLEXPRESS'
 database = 'retailAuth'
-username = 'zeke'
-password = 'zeke21'
+username = 'RetailAdmin'
+password = 'Retail@123'
 driver = 'ODBC Driver 17 for SQL Server'
 
 # async function to get db connection
